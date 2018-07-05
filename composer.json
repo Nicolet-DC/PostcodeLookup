@@ -3,6 +3,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.1.3",
+        "php-coord/php-coord": "^3.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "symfony/console": "^4.1",
