@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Utils\GeoConversion;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -106,5 +107,16 @@ class Postcode
         $this->longitude = $longitude;
 
         return $this;
+    }
+
+    public static function fromCsv(string $postcode, int $easting, int $northing):Postcode
+    {
+        $entity = new Postcode();
+        $entity->setPostcode($postcode);
+        $entity->setEasting($easting);
+        $entity->setNorthing($northing);
+        $entity->setLatitude(GeoConversion::toLatitude($easting));
+        $entity->setLongitude(GeoConversion::toLongitude($northing));
+        return $entity;
     }
 }
