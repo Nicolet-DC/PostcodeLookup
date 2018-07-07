@@ -1,8 +1,10 @@
 <?php
 namespace App\Utils;
 
+use App\Entity\Postcode;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use ZipArchive;
 
 class PostcodesGateway
@@ -49,11 +51,22 @@ class PostcodesGateway
         }
     }
 
-    public function persistPostcodes()
+    public function getPostcodesFromCsvs():array
     {
-        /*
-         * TODO: Iterate through CSVs and map to Postcode objects
-         * TODO: Must convert easting and northing to standard lat+lng
-         */
+        $postcodes = array();
+        $finder = new Finder();
+        $finder->files()->in(sys_get_temp_dir() . '/postcodes/extracted/data')->name('*.csv');
+
+        foreach ($finder as $file) {
+            $contents = (string)$file->getContents();
+
+            $postcodeCsv = str_getcsv($contents);
+            array_push($postcodes, Postcode::fromCsv(
+                $postcodeCsv[0],
+                $postcodeCsv[2],
+                $postcodeCsv[3]
+            ));
+        }
+        return $postcodes;
     }
 }
