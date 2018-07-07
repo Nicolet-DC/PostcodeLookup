@@ -3,146 +3,108 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostcodeRepository")
- * @ORM\Table(name="postcodes")
- *
- * Class Postcode
- * @package App\Entity
  */
 class Postcode
 {
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     private $postcode;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer")
      */
-    private $eastings;
+    private $easting;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer")
      */
-    private $northings;
+    private $northing;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float")
      */
     private $latitude;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float")
      */
     private $longitude;
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getPostcode(): string
+    public function getPostcode(): ?string
     {
         return $this->postcode;
     }
 
-    /**
-     * @param string $postcode
-     */
-    public function setPostcode(string $postcode): void
+    public function setPostcode(int $postcode): self
     {
         $this->postcode = $postcode;
+
+        return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getEastings(): int
+    public function getEasting(): ?int
     {
-        return $this->eastings;
+        return $this->easting;
     }
 
-    /**
-     * @param int $eastings
-     */
-    public function setEastings(int $eastings): void
+    public function setEasting(int $easting): self
     {
-        $this->eastings = $eastings;
+        $this->easting = $easting;
+
+        return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getNorthings(): int
+    public function getNorthing(): ?int
     {
-        return $this->northings;
+        return $this->northing;
     }
 
-    /**
-     * @param int $northings
-     */
-    public function setNorthings(int $northings): void
+    public function setNorthing(int $northing): self
     {
-        $this->northings = $northings;
+        $this->northing = $northing;
+
+        return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getLatitude(): float
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    /**
-     * @param float $latitude
-     */
-    public function setLatitude(float $latitude): void
+    public function setLatitude(float $latitude): self
     {
         $this->latitude = $latitude;
+
+        return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getLongitude(): float
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    /**
-     * @param float $longitude
-     */
-    public function setLongitude(float $longitude): void
+    public function setLongitude(float $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
     }
 }
