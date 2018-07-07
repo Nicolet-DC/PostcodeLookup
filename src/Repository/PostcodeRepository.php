@@ -19,32 +19,28 @@ class PostcodeRepository extends ServiceEntityRepository
         parent::__construct($registry, Postcode::class);
     }
 
-//    /**
-//     * @return Postcode[] Returns an array of Postcode objects
-//     */
-    /*
-    public function findByExampleField($value)
+
+    /**
+     * @return Postcode[] Returns an array of Postcode objects
+     */
+    public function findByPartialPostcode(string $postcode):array
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('p.postcode LIKE :val')
+            ->setParameter('val', $postcode)
             ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Postcode
+    public function findOneByPostcode($postcode): ?Postcode
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('p.postcode = :val')
+            ->setParameter('val', $postcode)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }
