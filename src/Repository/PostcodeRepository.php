@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Postcode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -21,6 +22,7 @@ class PostcodeRepository extends ServiceEntityRepository
 
 
     /**
+     * @param string $postcode
      * @return Postcode[] Returns an array of Postcode objects
      */
     public function findByPartialPostcode(string $postcode):array
@@ -34,13 +36,20 @@ class PostcodeRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @param $postcode
+     * @return Postcode|null
+     */
     public function findOneByPostcode($postcode): ?Postcode
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.postcode = :val')
-            ->setParameter('val', $postcode)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        try {
+            return $this->createQueryBuilder('p')
+                ->andWhere('p.postcode = :val')
+                ->setParameter('val', $postcode)
+                ->getQuery()
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException $exception) {
+            return null;
+        }
     }
 }
