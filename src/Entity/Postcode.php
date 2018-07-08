@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Utils\GeoConversion;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostcodeRepository")
@@ -43,6 +44,11 @@ class Postcode
      * @ORM\Column(type="float")
      */
     private $longitude;
+
+    /**
+     * @ORM\Column(type="point")
+     */
+    private $point;
 
     public function getId()
     {
@@ -115,8 +121,26 @@ class Postcode
         $entity->setPostcode($postcode);
         $entity->setEasting($easting);
         $entity->setNorthing($northing);
-        $entity->setLatitude(GeoConversion::toLatitude($easting));
-        $entity->setLongitude(GeoConversion::toLongitude($northing));
+        $latitude = GeoConversion::toLatitude($easting);
+        $entity->setLatitude($latitude);
+        $longitude = GeoConversion::toLongitude($northing);
+        $entity->setLongitude($longitude);
+        $point = new Point($latitude, $longitude);
+        $point->setLongitude($latitude);
+        $point->setLongitude($longitude);
+        $entity->setPoint($point);
         return $entity;
+    }
+
+    public function getPoint()
+    {
+        return $this->point;
+    }
+
+    public function setPoint($point): self
+    {
+        $this->point = $point;
+
+        return $this;
     }
 }
