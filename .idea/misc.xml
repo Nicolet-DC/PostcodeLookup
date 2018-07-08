@@ -13,6 +13,21 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="611031925">
+      <usages-collector id="statistics.php.composer.actions">
+        <counts>
+          <entry key="addDependencyDialog_from_ProjectViewPopup" value="3" />
+          <entry key="remove_from_AddDependencyDialog" value="2" />
+          <entry key="require_from_AddDependencyDialog" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.php.composer.command.options">
+        <counts>
+          <entry key="remove_with_--ansi_--no-interaction_--no-progress.default" value="2" />
+          <entry key="require_with_--ansi_--no-interaction_--no-progress.default" value="2" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
