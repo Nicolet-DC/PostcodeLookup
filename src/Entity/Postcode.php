@@ -60,7 +60,7 @@ class Postcode
         return $this->postcode;
     }
 
-    public function setPostcode(int $postcode): self
+    public function setPostcode(string $postcode): self
     {
         $this->postcode = $postcode;
 
@@ -137,7 +137,7 @@ class Postcode
         return $this->point;
     }
 
-    public function setPoint($point): self
+    public function setPoint(Point $point): self
     {
         $this->point = $point;
 
