@@ -5,25 +5,27 @@ namespace App\Controller;
 use App\Entity\Postcode;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class PostcodeController extends Controller
 {
-    /**
-     * @Route("/postcode", name="postcode")
-     */
-    public function index()
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PostcodeController.php',
-        ]);
-    }
 
+    /**
+     * Matches /postcode/search/*
+     *
+     * @Route("/postcode/search/{queryString}", name="postcode_partial_search")
+     * @param string $queryString
+     * @return bool|float|int|string
+     */
     public function getPostcodesByPartialStringMatch(string $queryString)
     {
         $postcodeRepository = $this->getDoctrine()->getRepository(Postcode::class);
         $results = $postcodeRepository->findByPartialPostcode($queryString);
-        // TODO : Return as JSON
+
+        $serializer = new Serializer(new ObjectNormalizer(), new JsonEncoder());
+        return $serializer->serialize($results, 'json');
     }
 
     public function updatePostcodes(array $postcodes):void
