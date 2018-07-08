@@ -19,6 +19,13 @@ class PostcodeController extends Controller
         ]);
     }
 
+    public function getPostcodesByPartialStringMatch(string $queryString)
+    {
+        $postcodeRepository = $this->getDoctrine()->getRepository(Postcode::class);
+        $results = $postcodeRepository->findByPartialPostcode($queryString);
+        // TODO : Return as JSON
+    }
+
     public function updatePostcodes(array $postcodes):void
     {
         foreach ($postcodes as $postcode) {
