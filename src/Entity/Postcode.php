@@ -126,13 +126,13 @@ class Postcode
         $longitude = GeoConversion::toLongitude($northing);
         $entity->setLongitude($longitude);
         $point = new Point($latitude, $longitude);
-        $point->setLongitude($latitude);
+        $point->setLatitude($latitude);
         $point->setLongitude($longitude);
         $entity->setPoint($point);
         return $entity;
     }
 
-    public function getPoint()
+    public function getPoint():Point
     {
         return $this->point;
     }
@@ -140,7 +140,6 @@ class Postcode
     public function setPoint(Point $point): self
     {
         $this->point = $point;
-
         return $this;
     }
 }
