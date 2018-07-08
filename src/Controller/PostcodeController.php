@@ -24,8 +24,7 @@ class PostcodeController extends Controller
         $postcodeRepository = $this->getDoctrine()->getRepository(Postcode::class);
         $results = $postcodeRepository->findByPartialPostcode($queryString);
 
-        $serializer = new Serializer(new ObjectNormalizer(), new JsonEncoder());
-        return $serializer->serialize($results, 'json');
+        return $this->serializeToJson($results);
     }
 
     /**
@@ -41,8 +40,7 @@ class PostcodeController extends Controller
         $postcodeRepository = $this->getDoctrine()->getRepository(Postcode::class);
         $results = $postcodeRepository->findByCoordinates($latitude, $longitude);
 
-        $serializer = new Serializer(new ObjectNormalizer(), new JsonEncoder());
-        return $serializer->serialize($results, 'json');
+        return $this->serializeToJson($results);
     }
 
     public function updatePostcodes(array $postcodes):void
@@ -62,5 +60,15 @@ class PostcodeController extends Controller
         }
         $entityManager->persist($postcode);
         $entityManager->flush();
+    }
+
+    /**
+     * @param $results
+     * @return bool|float|int|string
+     */
+    private function serializeToJson($results)
+    {
+        $serializer = new Serializer(new ObjectNormalizer(), new JsonEncoder());
+        return $serializer->serialize($results, 'json');
     }
 }
