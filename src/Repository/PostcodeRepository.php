@@ -20,7 +20,6 @@ class PostcodeRepository extends ServiceEntityRepository
         parent::__construct($registry, Postcode::class);
     }
 
-
     /**
      * @param string $postcode
      * @return Postcode[] Returns an array of Postcode objects
@@ -30,10 +29,26 @@ class PostcodeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->andWhere('p.postcode LIKE :val')
             ->setParameter('val', $postcode)
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('p.postcode', 'ASC')
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * @param float $latitude
+     * @param float $longitude
+     * @return array
+     */
+    public function findByCoordinates(float $latitude, float $longitude):array
+    {
+        $radius = '2500'; // In metres
+        return $this->createQueryBuilder('p')
+            ->andWhere('ST_Contains(:polygon, p.point)')
+            ->setParameter(':polygon', "ST_Buffer(ST_GeomFromText('POINT($longitude, $latitude)'), $radius, 'quad_segs=8')", 'string')
+            ->orderBy('p.postcode', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
