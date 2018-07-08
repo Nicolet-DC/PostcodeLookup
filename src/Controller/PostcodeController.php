@@ -28,6 +28,23 @@ class PostcodeController extends Controller
         return $serializer->serialize($results, 'json');
     }
 
+    /**
+     * Matches /postcode/location-search/*
+     *
+     * @Route("/postcode/location-search/{latitude, longitude}", name="postcode_location_search")
+     * @param float $latitude
+     * @param float $longitude
+     * @return bool|float|int|string
+     */
+    public function getPostcodesByLocation(float $latitude, float $longitude)
+    {
+        $postcodeRepository = $this->getDoctrine()->getRepository(Postcode::class);
+        $results = $postcodeRepository->findByCoordinates($latitude, $longitude);
+
+        $serializer = new Serializer(new ObjectNormalizer(), new JsonEncoder());
+        return $serializer->serialize($results, 'json');
+    }
+
     public function updatePostcodes(array $postcodes):void
     {
         foreach ($postcodes as $postcode) {
