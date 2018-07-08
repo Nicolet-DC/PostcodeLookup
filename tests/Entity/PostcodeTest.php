@@ -2,7 +2,6 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Postcode;
-use CrEOF\Spatial\PHP\Types\Geometry\Point;
 use PHPUnit\Framework\TestCase;
 
 class PostcodeTest extends TestCase
